@@ -68,3 +68,7 @@ The included `Procfile` runs `streamlit run app.py --server.port $PORT --server.
 ## Disclaimer
 
 This tool is for educational purposes only. It does not provide medical advice, diagnosis, or treatment, and its output should never be used as a substitute for consulting a qualified healthcare provider.
+
+## License
+
+Licensed under the [MIT License](LICENSE).
