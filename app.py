@@ -29,12 +29,27 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 load_dotenv()
-GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+
+
+def _load_groq_api_key():
+    # Local dev: .env via python-dotenv. Streamlit Community Cloud: the
+    # "Secrets" dashboard, exposed through st.secrets rather than os.environ.
+    api_key = os.getenv("GROQ_API_KEY")
+    if api_key:
+        return api_key
+    try:
+        return st.secrets.get("GROQ_API_KEY")
+    except Exception:
+        return None
+
+
+GROQ_API_KEY = _load_groq_api_key()
 
 if not GROQ_API_KEY:
     st.error(
-        "❌ Missing GROQ_API_KEY. Copy .env.example to .env and set GROQ_API_KEY "
-        "to a valid Groq API key, then restart the app."
+        "❌ Missing GROQ_API_KEY. For local runs, copy .env.example to .env and "
+        "set GROQ_API_KEY. On Streamlit Community Cloud, add it under your app's "
+        "Settings -> Secrets instead."
     )
     st.stop()
 
