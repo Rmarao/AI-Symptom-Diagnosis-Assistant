@@ -31,6 +31,13 @@ st.markdown("""
 load_dotenv()
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
+if not GROQ_API_KEY:
+    st.error(
+        "❌ Missing GROQ_API_KEY. Copy .env.example to .env and set GROQ_API_KEY "
+        "to a valid Groq API key, then restart the app."
+    )
+    st.stop()
+
 if 'initialized' not in st.session_state:
     st.session_state.initialized = False
     st.session_state.model = None
@@ -123,8 +130,12 @@ if not st.session_state.initialized:
     st.stop()
 
 # Input Section
+if "symptom_input" not in st.session_state:
+    st.session_state.symptom_input = ""
+
 user_input = st.text_area(
     "**Describe your symptoms:**",
+    key="symptom_input",
     placeholder="e.g., fever, headache, sore throat, fatigue",
     height=120,
     help="Enter symptoms separated by commas"
@@ -137,15 +148,17 @@ with col1:
     predict_button = st.button("🔍 Predict Disease", type="primary", use_container_width=True)
 
 with col2:
-    sample = st.button("💡 Try Example", use_container_width=True)
-    if sample : user_input = "fever, headache, sore throat, fatigue"
+    if st.button("💡 Try Example", use_container_width=True):
+        st.session_state.symptom_input = "fever, headache, sore throat, fatigue"
+        st.rerun()
 
 with col3:
     if st.button("🔄 Clear", use_container_width=True):
+        st.session_state.symptom_input = ""
         st.rerun()
 
 # Prediction Logic
-if (predict_button or sample ) and user_input:
+if predict_button:
     if not user_input.strip():
         st.warning("⚠️ Please enter symptoms first!")
     else:
