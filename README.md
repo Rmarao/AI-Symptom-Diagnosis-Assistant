@@ -69,6 +69,11 @@ The included `Procfile` runs `streamlit run app.py --server.port $PORT --server.
 
 This tool is for educational purposes only. It does not provide medical advice, diagnosis, or treatment, and its output should never be used as a substitute for consulting a qualified healthcare provider.
 
+## Contributors
+
+- [Revanth Kumar](https://github.com/RevanthKumar-1) — original RAG pipeline, FAISS index, and Streamlit UI ([source project](https://github.com/RevanthKumar-1/Disease_Prediction_RAG))
+- [Ramarao](https://github.com/Rmarao) — bug fixes, prompt-injection hardening, result de-duplication, docs, and packaging
+
 ## License
 
 Licensed under the [MIT License](LICENSE).
